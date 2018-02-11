@@ -1,0 +1,28 @@
+version: '2'
+
+services:
+    postgresdb:
+      container_name: postgresdb
+      image: postgres
+      volumes_from:
+        - dbstore
+      ports:
+        - "5432:5432"
+      depends_on:
+        - dbstore
+      networks:
+        - default
+
+    dbstore:
+        container_name: dbstore
+        image: postgres
+        volumes:
+          - dbdata:/var/lib/postgresql/data
+        entrypoint: /bin/true
+        environment:
+          - POSTGRES_PASSWORD=test1234    
+volumes:
+  dbdata:
+
+networks:
+    default:
